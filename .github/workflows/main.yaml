@@ -1,0 +1,52 @@
+# Copyright 2020 Pants project contributors.
+# Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+# See https://pants.readme.io/docs/using-pants-in-ci for tips on how to set up your CI with Pants.
+
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: |
+            ~/.cache/pants/setup
+            ~/.cache/pants/lmdb_store
+            ~/.cache/pants/named_caches
+          key: ${{ runner.os }}-
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Pants version
+        run: ./pants --version
+
+      - name: Check BUILD files
+        run: ./pants tailor --check update-build-files --check
+
+      - name: Linter & Type checker
+        run: |
+          ./pants lint check ::
+
+      - name: Test
+        run: |
+          ./pants test ::
+
+      - name: Upload Pants logs
+        uses: actions/upload-artifact@v3
+        with:
+          name: pants-log
+          path: .pants.d/pants.log
+        if: always()

@@ -8,12 +8,25 @@ backend_packages = [
     "pants.backend.python.lint.flake8",
     "pants.backend.python.typecheck.mypy",
 ]
+colors = true
 
 # https://www.pantsbuild.org/docs/anonymous-telemetry
 [anonymous-telemetry]
 enabled = true
 repo_id = "d25fd17e-00b8-427a-b829-5aab8d448a03"
 
+# https://www.pantsbuild.org/docs/reference-python
+[python]
+interpreter_constraints = ["CPython==3.10.*"]
+
+# https://www.pantsbuild.org/docs/reference-test
+[test]
+use_coverage = true
+
 # https://www.pantsbuild.org/docs/reference-mypy
 [mypy]
 config = "setup.cfg"
+
+# https://www.pantsbuild.org/docs/reference-pytest
+[pytest]
+args = ["-vv"]
