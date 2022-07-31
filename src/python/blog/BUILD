@@ -1,6 +1,13 @@
-python_sources()
+python_sources(
+    dependencies=[
+        "//:root#uvicorn",
+        "//:root#uvloop",
+        "//:root#httptools",
+    ],
+)
 
 pex_binary(
     name="main",
-    entry_point="main.py",
+    script="uvicorn",
+    dependencies=[":blog"],
 )
