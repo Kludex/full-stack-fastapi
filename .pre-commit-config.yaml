@@ -1,0 +1,17 @@
+repos:
+  - repo: local
+    hooks:
+      - id: lint-check
+        name: Linter & Type check
+        entry: "./pants --changed-since=HEAD lint check"
+        language: script
+        types: [python]
+        pass_filenames: false
+
+  - repo: local
+    hooks:
+      - id: tailor-check
+        name: Check BUILD files
+        entry: "./pants tailor --check update-build-files --check"
+        language: script
+        pass_filenames: false
