@@ -21,6 +21,13 @@ repo_id = "d25fd17e-00b8-427a-b829-5aab8d448a03"
 [python]
 interpreter_constraints = ["CPython==3.10.*"]
 
+[tailor]
+ignore_paths = ["infra/**"]
+
+# https://www.pantsbuild.org/docs/tagging-docker-images
+[docker]
+build_args = ["EXPECTED_TAG"]
+
 # https://www.pantsbuild.org/docs/reference-test
 [test]
 use_coverage = true

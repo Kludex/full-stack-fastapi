@@ -1,0 +1,6 @@
+name: full-stack
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A full stack application using FastAPI, Pantsbuild, Tilt, and more.
